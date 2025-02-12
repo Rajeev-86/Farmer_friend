@@ -22,6 +22,10 @@ class FarmInput(BaseModel):
 # Initialize FastAPI app
 app = FastAPI()
 
+@app.get("/")
+def home():
+    return {"message": "API is up and running!"}
+
 @app.post("/predict/")
 def predict_farm_compatibility(data: FarmInput):
     # Convert input to a list (ensure order matches model training)
