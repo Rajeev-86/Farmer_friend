@@ -2,3 +2,5 @@ fastapi
 uvicorn
 scikit-learn
 pickle5
+pydantic
+pandas
