@@ -6,7 +6,7 @@ from pydantic import BaseModel
 import os
 import pandas as pd
 
-with open("soil_climate_model+preprocessor.pkl", "rb") as f:
+with open("farm_compatibility_model.pkl", "rb") as f:
     model = pickle.load(f)
 print(model)
 
