@@ -1,25 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
-import pickle
 from pydantic import BaseModel
+from typing import List
+import numpy as np
 import os
-import pandas as pd
 
-with open("farm_compatibility_model.pkl", "rb") as f:
-    model = pickle.load(f)
-print(model)
+origins = ["*"]
 
-# Initialize FastAPI app
 app = FastAPI()
-
-origins = os.getenv("ALLOW_ORIGINS", "*")  # Default to "*"
-origins = origins.split(",") if isinstance(origins, str) else origins
-print("Allowed origins:", origins)  # Debugging step
-
-# Convert to a list if necessary
-if isinstance(origins, str):
-    origins = origins.split(",")  # Converts "http://example.com,https://example.com" to a list
 
 app.add_middleware(
     CORSMiddleware,
@@ -29,43 +18,60 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
- #Define request body structure
-class FarmInput(BaseModel):
-    Crop_Type: str
-    Farm_Size_Acres: float
-    Irrigation_Available: bool
-    Soil_pH: float
-    Soil_Nitrogen: float
-    Soil_Organic_Matter: float
-    Temperature: float
-    Rainfall: float
-    Humidity: float
+# Define input schema
+class CropRequest(BaseModel):
+    year: int
+    month: int
+    region: str
+    temperature: float
+    rainfall: float
+    humidity: float
+    soil_pH: float
+    soil_nitrogen: float
+    soil_phosphorus: float
+    soil_potassium: float
+    fertilizer_use: float
+    pesticide_use: float
+    previous_year_yield: float
+    sowing_to_harvest_days: int
+    farm_size_acres: float
+    irrigation_available: bool
+    supply_tons: float
+    import_tons: float
+    export_tons: float
+    crops: List[str]  # List of crops to evaluate
+
+# Dummy model functions (Replace with actual model inference code)
+def predict_market_demand(crop, data):
+    return np.random.uniform(50, 500)  # Replace with SARIMAX model inference
+
+def classify_soil_climate(crop, data):
+    return np.random.choice([0, 1])  # Replace with actual classifier inference
+
+def predict_yield(crop, data):
+    return np.random.uniform(1, 10)  # Replace with yield regression model inference
 
 @app.get("/")
-def home():
-    return {"message": "API is up and running!"}
+def read_root():
+    return {"message": "Hello, FastAPI!"}
 
-@app.post("/predict/")
-def predict_farm_compatibility(data: FarmInput):
-    # Convert input to a list (ensure order matches model training)
-
-    irrigation = 1 if data.Irrigation_Available else 0
-
-    input_data = pd.DataFrame([[
-    data.Crop_Type, data.Farm_Size_Acres, irrigation,
-    data.Soil_pH, data.Soil_Nitrogen, data.Soil_Organic_Matter,
-    data.Temperature, data.Rainfall, data.Humidity
-]], columns=[
-    "Crop_Type", "Farm_Size_Acres", "Irrigation_Available",
-    "Soil_pH", "Soil_Nitrogen", "Soil_Organic_Matter",
-    "Temperature", "Rainfall", "Humidity"
-])
-
-    print("Input DataFrame:\n", input_data)
-
-    # Make prediction
-    prediction = model.predict(input_data)[0]
-    return {"compatible": bool(prediction)}
+@app.post("/recommend_crops")
+def recommend_crops(request: CropRequest):
+    scores = []
+    w1, w2, w3 = 1, 1, 1  # Equal weights
+    
+    for crop in request.crops:
+        market_demand = predict_market_demand(crop, request)
+        compatibility = classify_soil_climate(crop, request)
+        predicted_yield = predict_yield(crop, request)
+        
+        final_score = (w1 * market_demand) + (w2 * compatibility) + (w3 * predicted_yield)
+        scores.append((crop, final_score))
+    
+    # Sort crops by final score in descending order
+    ranked_crops = sorted(scores, key=lambda x: x[1], reverse=True)
+    
+    return {"ranked_crops": ranked_crops}
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)  # Replace 8000 with your desired port
+    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 7000)))
