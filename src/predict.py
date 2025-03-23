@@ -1,4 +1,4 @@
-import pickle
+import dill
 import os
 import sys
 import pandas as pd
@@ -29,10 +29,10 @@ def predict_market_demand(data: dict[str, Any]):
     # Load preprocessor and model
     PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'preprocessor_SD.pkl')
     with open(PREPROCESS_PATH, 'rb') as file:
-        preprocessor = pickle.load(file)
+        preprocessor = dill.load(file)
     MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'model_SD.pkl')
     with open(MODEL_PATH, 'rb') as file:
-        model = pickle.load(file)
+        model = dill.load(file)
     # Transform and make predictions
     data_transformed = preprocessor.transform(sarimax_input)
     predicted_demand = model.predict(start=0, end=0, exog=data_transformed)
@@ -54,10 +54,10 @@ def predict_compatibility(data: dict[str, Any]):
     # Load preprocessor and model
     PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Soil-Climate_Compatibility_Classifier', 'preprocessor_SC.pkl')
     with open(PREPROCESS_PATH, 'rb') as file:
-        preprocessor = pickle.load(file)
+        preprocessor = dill.load(file)
     MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Soil-Climate_Compatibility_Classifier', 'model_SC.pkl')
     with open(MODEL_PATH, 'rb') as file:
-        model = pickle.load(file)
+        model = dill.load(file)
     # Transform and make prediction
     data_transformed = preprocessor.transform(classifier_input)
     predicted_compatibility = model.predict(data_transformed)
@@ -85,11 +85,11 @@ def predict_yield(data: dict[str, Any]):
     # Load preprocessor and model
     PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Yield_Regression', 'preprocessor_YR.pkl')
     with open(PREPROCESS_PATH, 'rb') as file:
-        preprocessor = pickle.load(file)
+        preprocessor = dill.load(file)
     MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Yield_Regression', 'YR_model.pkl')
     with open(MODEL_PATH, 'rb') as file:
-        model = pickle.load(file)
+        model = dill.load(file)
     # Transform and make predictions
     data_transformed = preprocessor.transform(yield_input)
-    predicted_yield = model.predict(ata_transformed)
+    predicted_yield = model.predict(data_transformed)
     return predicted_yield
