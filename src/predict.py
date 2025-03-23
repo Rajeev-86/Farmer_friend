@@ -1,6 +1,8 @@
 import pickle
 import os
 import sys
+import pandas as pd
+from typing import dict
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(BASE_DIR)
