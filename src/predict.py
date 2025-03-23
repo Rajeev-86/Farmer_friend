@@ -10,6 +10,13 @@ from src.preprocess.SC_preprocess import transform_preprocessor
 from src.preprocess.SD_preprocess import preprocess_data, preprocess_dtypes
 from src.preprocess.YR_preprocess import transform_preprocessing
 
+custom_globals = {
+    'preprocess_data': preprocess_data,
+    'preprocess_dtypes': preprocess_dtypes,
+    'transform_preprocessor': transform_preprocessor,
+    'transform_preprocessing': transform_preprocessing
+}
+
 def predict_market_demand(data: dict[str, Any]):
 
     sarimax_input = {
@@ -29,7 +36,7 @@ def predict_market_demand(data: dict[str, Any]):
     # Load preprocessor and model
     PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'preprocessor_SD.pkl')
     with open(PREPROCESS_PATH, 'rb') as file:
-        preprocessor = dill.load(file)
+        preprocessor = dill.load(file, ignore=True, globals=custom_globals)
     MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'model_SD.pkl')
     with open(MODEL_PATH, 'rb') as file:
         model = dill.load(file)
@@ -54,7 +61,7 @@ def predict_compatibility(data: dict[str, Any]):
     # Load preprocessor and model
     PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Soil-Climate_Compatibility_Classifier', 'preprocessor_SC.pkl')
     with open(PREPROCESS_PATH, 'rb') as file:
-        preprocessor = dill.load(file)
+        preprocessor = dill.load(file, ignore=True, globals=custom_globals)
     MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Soil-Climate_Compatibility_Classifier', 'model_SC.pkl')
     with open(MODEL_PATH, 'rb') as file:
         model = dill.load(file)
@@ -85,7 +92,7 @@ def predict_yield(data: dict[str, Any]):
     # Load preprocessor and model
     PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Yield_Regression', 'preprocessor_YR.pkl')
     with open(PREPROCESS_PATH, 'rb') as file:
-        preprocessor = dill.load(file)
+        preprocessor = dill.load(file, ignore=True, globals=custom_globals)
     MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Yield_Regression', 'YR_model.pkl')
     with open(MODEL_PATH, 'rb') as file:
         model = dill.load(file)
