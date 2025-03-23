@@ -10,7 +10,7 @@ from src.preprocess.SC_preprocess import transform_preprocessor
 from src.preprocess.SD_preprocess import preprocess_data, preprocess_dtypes
 from src.preprocess.YR_preprocess import transform_preprocessing
 
-def predict_market_demand(data: Dict):
+def predict_market_demand(data: dict[str, Any]):
 
     sarimax_input = {
         "year": data["year"],
@@ -38,7 +38,7 @@ def predict_market_demand(data: Dict):
     predicted_demand = model.predict(start=0, end=0, exog=data_transformed)
     return predicted_demand
 
-def predict_compatibility(data: Dict):
+def predict_compatibility(data: dict[str, Any]):
 
     classifier_input = {
         "crop_type": data["crop"],
@@ -63,7 +63,7 @@ def predict_compatibility(data: Dict):
     predicted_compatibility = model.predict(data_transformed)
     return predicted_compatibility
 
-def predict_yield(data: Dict):
+def predict_yield(data: dict[str, Any]):
 
     yield_input = {
         "year": data["year"],
