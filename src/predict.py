@@ -1,3 +1,13 @@
+import pickle
+import os
+import sys
+
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(BASE_DIR)
+from src.preprocess.SC_preprocess import 
+from src.preprocess.SD_preprocess import 
+from src.preprocess.YR_preprocess import 
+
 def predict_market_demand(data: Dict):
 
     sarimax_input = {
