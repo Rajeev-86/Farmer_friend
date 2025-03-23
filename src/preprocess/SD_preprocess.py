@@ -1,7 +1,6 @@
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
 
 def preprocess_data(data):
 
