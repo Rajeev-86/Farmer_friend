@@ -5,6 +5,11 @@ from pydantic import BaseModel
 from typing import List, Dict
 import numpy as np
 import os
+import sys
+
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(BASE_DIR)
+from src.predict import predict_market_demand, predict_compatibility, predict_yield
 
 origins = ["*"]
 
@@ -42,70 +47,14 @@ class CropRequest(BaseModel):
     export_tons: float
     crops: List[str]  # List of crops to evaluate
 
-# Dummy model functions (Replace with actual model inference code)
-def predict_market_demand(data: Dict):
-
-    sarimax_input = {
-        "year": data["year"],
-        "month": data["month"],
-        "crop": data["crop"],  # Ensure the crop is passed correctly
-        "region": data["region"],
-        "temperature": data["temperature"],
-        "rainfall": data["rainfall"],
-        "humidity": data["humidity"],
-        "soil_pH": data["soil_pH"],
-        "soil_nitrogen": data["soil_nitrogen"],
-        "supply_tons": data["supply_tons"],
-        "import_tons": data["import_tons"],
-        "export_tons": data["export_tons"],
-    }
-    return np.random.uniform(50, 500)  # Replace with SARIMAX model inference
-
-def predict_compatibility(data: Dict):
-
-    classifier_input = {
-        "crop_type": data["crop"],
-        "farm_size_acres": data["farm_size_acres"],
-        "irrigation_available": data["irrigation_available"],
-        "soil_pH": data["soil_pH"],
-        "soil_nitrogen": data["soil_nitrogen"],
-        "soil_organic_matter": data["soil_organic_matter"],
-        "temperature": data["temperature"],
-        "rainfall": data["rainfall"],
-        "humidity": data["humidity"],
-    }
-
-    return np.random.choice([0, 1])  # Replace with actual classifier inference
-
-def predict_yield(data: Dict):
-
-    yield_input = {
-        "year": data["year"],
-        "month": data["month"],
-        "crop": data["crop"],
-        "region": data["region"],
-        "temperature": data["temperature"],
-        "rainfall": data["rainfall"],
-        "humidity": data["humidity"],
-        "soil_pH": data["soil_pH"],
-        "soil_nitrogen": data["soil_nitrogen"],
-        "soil_phosphorus": data["soil_phosphorus"],
-        "soil_potassium": data["soil_potassium"],
-        "fertilizer_use": data["fertilizer_use"],
-        "pesticide_use": data["pesticide_use"],
-        "previous_year_yield": data["previous_year_yield"],
-        "sowing_to_harvest_days": data["sowing_to_harvest_days"],
-    }
-    return np.random.uniform(1, 10)  # Replace with yield regression model inference
-
 @app.get("/")
 def read_root():
     return {"message": "Hello, FastAPI!"}
 
 @app.post("/recommend_crops")
 def recommend_crops(request: CropRequest):
-    weights = {"market_demand": 1, "compatibility": 1, "predicted_yield": 1}
     
+    weights = {"market_demand": 1, "compatibility": 1, "predicted_yield": 1}    
     crop_scores = []
     
     for crop in request.crops:
@@ -113,9 +62,9 @@ def recommend_crops(request: CropRequest):
         crop_data = request.model_dump()
         crop_data["crop"] = crop  # Add current crop name
 
-        market_demand = predict_market_demand(crop_data)
-        compatibility = predict_compatibility(crop_data)
-        predicted_yield = predict_yield(crop_data)
+        market_demand = float(predict_market_demand(crop_data))
+        compatibility = float(predict_compatibility(crop_data))
+        predicted_yield = float(predict_yield(crop_data))
 
         # Compute final score
         final_score = (
