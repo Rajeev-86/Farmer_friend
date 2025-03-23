@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from pydantic import BaseModel
-from typing import List, Dict
+from typing import Any, List
 import numpy as np
 import os
 import sys
