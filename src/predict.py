@@ -37,7 +37,6 @@ def predict_market_demand(data: dict[str, Any]):
     PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'preprocessor_SD.pkl')
     with open(PREPROCESS_PATH, 'rb') as file:
         unpickler = dill.Unpickler(file)
-        unpickler.globals.update(custom_globals)  # Update global scope
         preprocessor = unpickler.load()
     MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'model_SD.pkl')
     with open(MODEL_PATH, 'rb') as file:
@@ -64,7 +63,6 @@ def predict_compatibility(data: dict[str, Any]):
     PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Soil-Climate_Compatibility_Classifier', 'preprocessor_SC.pkl')
     with open(PREPROCESS_PATH, 'rb') as file:
         unpickler = dill.Unpickler(file)
-        unpickler.globals.update(custom_globals)  # Update global scope
         preprocessor = unpickler.load()
     MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Soil-Climate_Compatibility_Classifier', 'model_SC.pkl')
     with open(MODEL_PATH, 'rb') as file:
@@ -97,7 +95,6 @@ def predict_yield(data: dict[str, Any]):
     PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Yield_Regression', 'preprocessor_YR.pkl')
     with open(PREPROCESS_PATH, 'rb') as file:
         unpickler = dill.Unpickler(file)
-        unpickler.globals.update(custom_globals)  # Update global scope
         preprocessor = unpickler.load()
     MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Yield_Regression', 'YR_model.pkl')
     with open(MODEL_PATH, 'rb') as file:
