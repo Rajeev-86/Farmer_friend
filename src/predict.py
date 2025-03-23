@@ -4,9 +4,9 @@ import sys
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(BASE_DIR)
-from src.preprocess.SC_preprocess import 
-from src.preprocess.SD_preprocess import 
-from src.preprocess.YR_preprocess import 
+from src.preprocess.SC_preprocess import transform_preprocessor
+from src.preprocess.SD_preprocess import preprocess_data, preprocess_dtypes
+from src.preprocess.YR_preprocess import transform_preprocessing
 
 def predict_market_demand(data: Dict):
 
@@ -24,19 +24,16 @@ def predict_market_demand(data: Dict):
         "import_tons": data["import_tons"],
         "export_tons": data["export_tons"],
     }
-    # Load the saved SARIMAX model and preprocessor
-    with open('/content/drive/MyDrive/Colab Notebooks/crops recommender/supply demand model/model_SD.pkl', 'rb') as model_file:
-        model_fit = pickle.load(model_file)
-
-    with open('/content/drive/MyDrive/Colab Notebooks/crops recommender/supply demand model/preprocessor_SD.pkl', 'rb') as prep_file:
-        preprocessor = pickle.load(prep_file)
-
-    # Transform input features
-    new_data_transformed = preprocessor.transform(new_data)
-
-    # Predict Market Demand (returns scaled values)
-    predicted_demand = model_fit.predict(start=0, end=0, exog=new_data_transformed)
-
+    # Load preprocessor and model
+    PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'preprocessor_SD.pkl')
+    with open(PREPROCESS_PATH, 'rb') as file:
+        preprocessor = pickle.load(file)
+    MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'model_SD.pkl')
+    with open(MODEL_PATH, 'rb') as file:
+        model = pickle.load(file)
+    # Transform and make predictions
+    data_transformed = preprocessor.transform(sarimax_input)
+    predicted_demand = model.predict(start=0, end=0, exog=data_transformed)
     return predicted_demand
 
 def predict_compatibility(data: Dict):
@@ -52,18 +49,16 @@ def predict_compatibility(data: Dict):
         "rainfall": data["rainfall"],
         "humidity": data["humidity"],
     }
-
-    with open('/content/drive/MyDrive/Colab Notebooks/crops recommender/Soil-Climate model/preprocessor_SC.pkl', 'rb') as prep_file:
-        preprocessor = pickle.load(prep_file)
-    with open('/content/drive/MyDrive/Colab Notebooks/crops recommender/Soil-Climate model/model_SC.pkl', 'rb') as model_file:
-        model_fit = pickle.load(model_file)
-
-    # Transform input features
-    new_data_transformed = preprocessor.transform(new_data)
-
-    # Predict Market Demand (returns scaled values)
-    predicted_compatibility = model_fit.predict(new_data_transformed)
-
+    # Load preprocessor and model
+    PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Soil-Climate_Compatibility_Classifier', 'preprocessor_SC.pkl')
+    with open(PREPROCESS_PATH, 'rb') as file:
+        preprocessor = pickle.load(file)
+    MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Soil-Climate_Compatibility_Classifier', 'model_SC.pkl')
+    with open(MODEL_PATH, 'rb') as file:
+        model = pickle.load(file)
+    # Transform and make prediction
+    data_transformed = preprocessor.transform(classifier_input)
+    predicted_compatibility = model.predict(data_transformed)
     return predicted_compatibility
 
 def predict_yield(data: Dict):
@@ -85,15 +80,14 @@ def predict_yield(data: Dict):
         "previous_year_yield": data["previous_year_yield"],
         "sowing_to_harvest_days": data["sowing_to_harvest_days"],
     }
-    with open('/content/drive/MyDrive/Colab Notebooks/crops recommender/Yield Regression Model/preprocessor_YR.pkl', 'rb') as prep_file:
-        preprocessor = pickle.load(prep_file)
-    with open('/content/drive/MyDrive/Colab Notebooks/crops recommender/Yield Regression Model/YR_model.pkl', 'rb') as model_file:
-        model_fit = pickle.load(model_file)
-
-    # Transform input features
-    new_data_transformed = preprocessor.transform(new_data)
-
-    # Predict Market Demand (returns scaled values)
-    predicted_yield = model_fit.predict(new_data_transformed)
-
+    # Load preprocessor and model
+    PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Yield_Regression', 'preprocessor_YR.pkl')
+    with open(PREPROCESS_PATH, 'rb') as file:
+        preprocessor = pickle.load(file)
+    MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Yield_Regression', 'YR_model.pkl')
+    with open(MODEL_PATH, 'rb') as file:
+        model = pickle.load(file)
+    # Transform and make predictions
+    data_transformed = preprocessor.transform(yield_input)
+    predicted_yield = model.predict(ata_transformed)
     return predicted_yield
