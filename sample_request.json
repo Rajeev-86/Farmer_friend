@@ -1,0 +1,25 @@
+{
+  "year": 2025,
+  "month": 3,
+  "region": "Bilaspur Division",
+  "temperature": 40,
+  "rainfall": 87,
+  "humidity": 10,
+  "soil_pH": 5,
+  "soil_nitrogen": 34,
+  "soil_phosphorus": 34,
+  "soil_potassium": 34,
+  "soil_organic_matter": 5,
+  "fertilizer_use": 34,
+  "pesticide_use": 34,
+  "previous_year_yield": 34,
+  "sowing_to_harvest_days": 34,
+  "farm_size_acres": 89,
+  "irrigation_available": true,
+  "supply_tons": 453,
+  "import_tons": 564,
+  "export_tons": 768,
+  "crops": [
+    "Wheat", "Rice", "Maize", "Soybean", "Niger", "Urd", "kodo-kutki", "summer paddy", "Gram", "Tiwra", "other crops"
+  ]
+}
