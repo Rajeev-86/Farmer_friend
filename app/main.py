@@ -4,6 +4,7 @@ import uvicorn
 from pydantic import BaseModel
 from typing import Any, List
 import numpy as np
+import pandas as pd
 import os
 import sys
 
