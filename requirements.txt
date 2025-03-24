@@ -5,5 +5,5 @@ pydantic
 pandas
 statsmodels
 typing
-dill
 gdown
+cloudpickle
