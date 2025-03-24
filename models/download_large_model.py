@@ -9,9 +9,12 @@ sys.path.append(BASE_DIR)
 #MODEL_URL = "https://drive.google.com/uc?id=1rnoQhjp59h89j6vK2YjcqBYXTNwMc0jf"
 
 #dill
-MODEL_URL = "https://drive.google.com/uc?id=1-GLGhjhgk7B582InVAAX4sIOWMNFK3er"
+#MODEL_URL = "https://drive.google.com/uc?id=1-GLGhjhgk7B582InVAAX4sIOWMNFK3er"
 
-MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'dill_model_SD.pkl')
+#cloudpickle
+MODEL_URL = "https://drive.google.com/uc?id=1-EKQrfbvBreVZuiNT3rIWuibuF2Urezz"
+
+MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'cp_model_SD.pkl')
 
 def download_model():
     if not os.path.exists(MODEL_PATH):
