@@ -33,6 +33,7 @@ def predict_market_demand(data: dict[str, Any]):
         "import_tons": data["import_tons"],
         "export_tons": data["export_tons"],
     }
+    sarimax_input = pd.DataFrame(sarimax_input)
     # Load preprocessor and model
     PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'cp_preprocessor_SD.pkl')
     with open(PREPROCESS_PATH, 'rb') as file:
