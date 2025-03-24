@@ -7,7 +7,6 @@ fi
 
 # Ensure dependencies are installed
 pip install --no-cache-dir -r requirements.txt
-pip install dill==0.3.7  # Ensure dill is installed
 
 # Run model download script if models are missing
 python models/download_large_model.py
