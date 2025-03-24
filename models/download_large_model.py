@@ -11,7 +11,7 @@ sys.path.append(BASE_DIR)
 #dill
 MODEL_URL = "https://drive.google.com/uc?id=1-GLGhjhgk7B582InVAAX4sIOWMNFK3er"
 
-MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'model_SD.pkl')
+MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'dill_model_SD.pkl')
 
 def download_model():
     if not os.path.exists(MODEL_PATH):
