@@ -1,4 +1,4 @@
-import dill
+import cloudpickle as cp
 import os
 import sys
 import pandas as pd
@@ -17,8 +17,6 @@ custom_globals = {
     'transform_preprocessing': transform_preprocessing
 }
 
-dill.settings['recurse'] = True
-
 def predict_market_demand(data: dict[str, Any]):
 
     sarimax_input = {
@@ -36,12 +34,12 @@ def predict_market_demand(data: dict[str, Any]):
         "export_tons": data["export_tons"],
     }
     # Load preprocessor and model
-    PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'dill_preprocessor_SD.pkl')
+    PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'cp_preprocessor_SD.pkl')
     with open(PREPROCESS_PATH, 'rb') as file:
-        preprocessor = dill.load(file)
-    MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'dill_model_SD.pkl')
+        preprocessor = cp.load(file)
+    MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'cp_model_SD.pkl')
     with open(MODEL_PATH, 'rb') as file:
-        model = dill.load(file)
+        model = cp.load(file)
     # Transform and make predictions
     data_transformed = preprocessor.transform(sarimax_input)
     predicted_demand = model.predict(start=0, end=0, exog=data_transformed)
@@ -61,12 +59,12 @@ def predict_compatibility(data: dict[str, Any]):
         "humidity": data["humidity"],
     }
     # Load preprocessor and model
-    PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Soil-Climate_Compatibility_Classifier', 'dill_preprocessor_SC.pkl')
+    PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Soil-Climate_Compatibility_Classifier', 'cp_preprocessor_SC.pkl')
     with open(PREPROCESS_PATH, 'rb') as file:
-        preprocessor = dill.load(file)
-    MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Soil-Climate_Compatibility_Classifier', 'dill_model_SC.pkl')
+        preprocessor = cp.load(file)
+    MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Soil-Climate_Compatibility_Classifier', 'cp_model_SC.pkl')
     with open(MODEL_PATH, 'rb') as file:
-        model = dill.load(file)
+        model = cp.load(file)
     # Transform and make prediction
     data_transformed = preprocessor.transform(classifier_input)
     predicted_compatibility = model.predict(data_transformed)
@@ -92,12 +90,12 @@ def predict_yield(data: dict[str, Any]):
         "sowing_to_harvest_days": data["sowing_to_harvest_days"],
     }
     # Load preprocessor and model
-    PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Yield_Regression', 'dill_preprocessor_YR.pkl')
+    PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Yield_Regression', 'cp_preprocessor_YR.pkl')
     with open(PREPROCESS_PATH, 'rb') as file:
-        preprocessor = dill.load(file)
-    MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Yield_Regression', 'dill_model_YR.pkl')
+        preprocessor = cp.load(file)
+    MODEL_PATH = os.path.join(BASE_DIR, 'models', 'Yield_Regression', 'cp_model_YR.pkl')
     with open(MODEL_PATH, 'rb') as file:
-        model = dill.load(file)
+        model = cp.load(file)
     # Transform and make predictions
     data_transformed = preprocessor.transform(yield_input)
     predicted_yield = model.predict(data_transformed)
