@@ -17,6 +17,8 @@ custom_globals = {
     'transform_preprocessing': transform_preprocessing
 }
 
+dill.settings['recurse'] = True
+
 def predict_market_demand(data: dict[str, Any]):
 
     sarimax_input = {
