@@ -3,6 +3,7 @@
 // supply_tones, import_tones, export_tones are previous year data that is supposed to come from agriculture/economic surveys.
 // previous_year_yeild is for prev_crop that farmer grew last year
 // temperature, rainfall, humidity are predicted values from weather monitoring organisations
+// There are still few errors i'm working to solve but the below sample request is working and should be enough to build interface with.
 ----
 
 {
