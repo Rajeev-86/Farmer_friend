@@ -26,6 +26,7 @@
   "supply_tons": 453,
   "import_tons": 564,
   "export_tons": 768,
+  "prev_crop": "Rice",
   "crops": [
     "Wheat", "Rice", "Maize", "Soybean", "Niger", "Urd", "kodo-kutki", "summer paddy", "Gram", "Tiwra", "other crops"
   ]
