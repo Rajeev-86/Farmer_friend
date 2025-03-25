@@ -20,20 +20,22 @@ custom_globals = {
 def predict_market_demand(data: dict[str, Any]):
 
     sarimax_input = {
-        "year": data["year"],
-        "month": data["month"],
-        "crop": data["crop"],  # Ensure the crop is passed correctly
-        "region": data["region"],
-        "temperature": data["temperature"],
-        "rainfall": data["rainfall"],
-        "humidity": data["humidity"],
-        "soil_pH": data["soil_pH"],
-        "soil_nitrogen": data["soil_nitrogen"],
-        "supply_tons": data["supply_tons"],
-        "import_tons": data["import_tons"],
-        "export_tons": data["export_tons"],
+        "Year": [data["year"]],  
+        "Month": [data["month"]],  
+        "Crop": [data["crops"]],
+        "Region": [data["region"]],  
+        "Temperature": [data["temperature"]],  
+        "Rainfall": [data["rainfall"]],  
+        "Humidity": [data["humidity"]],  
+        "Soil_pH": [data["soil_pH"]],  
+        "Soil_Nitrogen": [data["soil_nitrogen"]],  
+        "Supply_Tons": [data["supply_tons"]],  
+        "Import_Tons": [data["import_tons"]],  
+        "Export_Tons": [data["export_tons"]]  
     }
-    sarimax_input = pd.DataFrame(sarimax_input)
+
+    sarimax_input  = pd.DataFrame(sarimax_input)  # Now it behaves like the second input
+
     # Load preprocessor and model
     PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Demand_Predictor', 'cp_preprocessor_SD.pkl')
     with open(PREPROCESS_PATH, 'rb') as file:
@@ -49,16 +51,17 @@ def predict_market_demand(data: dict[str, Any]):
 def predict_compatibility(data: dict[str, Any]):
 
     classifier_input = {
-        "crop_type": data["crop"],
-        "farm_size_acres": data["farm_size_acres"],
-        "irrigation_available": data["irrigation_available"],
-        "soil_pH": data["soil_pH"],
-        "soil_nitrogen": data["soil_nitrogen"],
-        "soil_organic_matter": data["soil_organic_matter"],
-        "temperature": data["temperature"],
-        "rainfall": data["rainfall"],
-        "humidity": data["humidity"],
+    "Crop_Type": [data["crops"]],  # Ensure single crop
+    "Farm_Size_Acres": [data["farm_size_acres"]],
+    "Irrigation_Available": [data["irrigation_available"]],
+    "Soil_pH": [data["soil_pH"]],
+    "Soil_Nitrogen": [data["soil_nitrogen"]],
+    "Soil_Organic_Matter": [data["soil_organic_matter"]],
+    "Temperature": [data["temperature"]],
+    "Rainfall": [data["rainfall"]],
+    "Humidity": [data["humidity"]],
     }
+    classifier_input = pd.DataFrame(classifier_input)
     # Load preprocessor and model
     PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Soil-Climate_Compatibility_Classifier', 'cp_preprocessor_SC.pkl')
     with open(PREPROCESS_PATH, 'rb') as file:
@@ -74,22 +77,23 @@ def predict_compatibility(data: dict[str, Any]):
 def predict_yield(data: dict[str, Any]):
 
     yield_input = {
-        "year": data["year"],
-        "month": data["month"],
-        "crop": data["crop"],
-        "region": data["region"],
-        "temperature": data["temperature"],
-        "rainfall": data["rainfall"],
-        "humidity": data["humidity"],
-        "soil_pH": data["soil_pH"],
-        "soil_nitrogen": data["soil_nitrogen"],
-        "soil_phosphorus": data["soil_phosphorus"],
-        "soil_potassium": data["soil_potassium"],
-        "fertilizer_use": data["fertilizer_use"],
-        "pesticide_use": data["pesticide_use"],
-        "previous_year_yield": data["previous_year_yield"],
-        "sowing_to_harvest_days": data["sowing_to_harvest_days"],
+        "Year": [data["year"]],
+        "Month": [data["month"]],
+        "Crop": [data["crops"]],  # Ensure single crop
+        "Region": [data["region"]],
+        "Temperature": [data["temperature"]],
+        "Rainfall": [data["rainfall"]],
+        "Humidity": [data["humidity"]],
+        "Soil_pH": [data["soil_pH"]],
+        "Soil_Nitrogen": [data["soil_nitrogen"]],
+        "Soil_Phosphorus": [data["soil_phosphorus"]],
+        "Soil_Potassium": [data["soil_potassium"]],
+        "Fertilizer_Use": [data["fertilizer_use"]],
+        "Pesticide_Use": [data["pesticide_use"]],
+        "Previous_Year_Yield": [data["previous_year_yield"]],
+        "Sowing_To_Harvest_Days": [data["sowing_to_harvest_days"]],
     }
+    yield_input = pd.DataFrame(yield_input)
     # Load preprocessor and model
     PREPROCESS_PATH = os.path.join(BASE_DIR, 'models', 'Yield_Regression', 'cp_preprocessor_YR.pkl')
     with open(PREPROCESS_PATH, 'rb') as file:
