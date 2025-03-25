@@ -61,7 +61,7 @@ def recommend_crops(request: CropRequest):
     for crop in request.crops:
         # Convert request object to dictionary
         crop_data = request.model_dump()
-        crop_data["irrifation_available"] = int(crop_data["irrifation_available"])
+        crop_data["irrigation_available"] = int(crop_data["irrigation_available"])
         crop_data["crop"] = crop  # Add current crop name
 
         market_demand = float(predict_market_demand(crop_data))
