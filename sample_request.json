@@ -32,3 +32,55 @@
     "Wheat", "Rice", "Maize", "Soybean", "Niger", "Urd", "kodo-kutki", "summer paddy", "Gram", "Tiwra", "other crops"
   ]
 }
+
+---------------------------------------------------------------------------------------------------------------------------------
+// Sample Response
+
+{
+  "ranked_crops": [
+    {
+      "crop": "summer paddy",
+      "score": 4498.742420871827
+    },
+    {
+      "crop": "other crops",
+      "score": 4009.9371129404094
+    },
+    {
+      "crop": "kodo-kutki",
+      "score": 3376.020679028836
+    },
+    {
+      "crop": "Tiwra",
+      "score": 2182.3672107313537
+    },
+    {
+      "crop": "Rice",
+      "score": 1846.3454773941276
+    },
+    {
+      "crop": "Maize",
+      "score": 1712.0402414515872
+    },
+    {
+      "crop": "Gram",
+      "score": 1558.410180326266
+    },
+    {
+      "crop": "Wheat",
+      "score": 1543.017209616871
+    },
+    {
+      "crop": "Soybean",
+      "score": 1408.4719468197284
+    },
+    {
+      "crop": "Urd",
+      "score": 860.8277031173272
+    },
+    {
+      "crop": "Niger",
+      "score": 820.8907061914022
+    }
+  ]
+}
