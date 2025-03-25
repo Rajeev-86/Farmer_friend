@@ -1,3 +1,10 @@
+// possible region values ["Raipur Division:", "Bilaspur Division", "Sarangarh-Bilaigarh Division", "Surguja Division", "Balod Division"]*/
+//  Always keep the list of crops as below for all requests 
+// supply_tones, import_tones, export_tones are previous year data that is supposed to come from agriculture/economic surveys.
+// previous_year_yeild is for any crop that farmer grew last year
+// temperature, rainfall, humidity are predicted values from weather monitoring organisations
+----
+
 {
   "year": 2025,
   "month": 3,
