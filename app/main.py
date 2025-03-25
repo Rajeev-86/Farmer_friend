@@ -42,7 +42,7 @@ class CropRequest(BaseModel):
     previous_year_yield: float
     sowing_to_harvest_days: int
     farm_size_acres: float
-    irrigation_available: bool
+    irrigation_available: int
     supply_tons: float
     import_tons: float
     export_tons: float
