@@ -46,6 +46,7 @@ class CropRequest(BaseModel):
     supply_tons: float
     import_tons: float
     export_tons: float
+    prev_crop: str
     crops: List[str]  # List of crops to evaluate
 
 @app.get("/")
