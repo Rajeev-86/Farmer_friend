@@ -22,7 +22,7 @@ def predict_market_demand(data: dict[str, Any]):
     sarimax_input = {
         "Year": [data["year"]],  
         "Month": [data["month"]],  
-        "Crop": [data["crops"]],
+        "Crop": [data["crop"]],
         "Region": [data["region"]],  
         "Temperature": [data["temperature"]],  
         "Rainfall": [data["rainfall"]],  
@@ -51,7 +51,7 @@ def predict_market_demand(data: dict[str, Any]):
 def predict_compatibility(data: dict[str, Any]):
 
     classifier_input = {
-    "Crop_Type": [data["crops"]],  # Ensure single crop
+    "Crop_Type": [data["crop"]],  # Ensure single crop
     "Farm_Size_Acres": [data["farm_size_acres"]],
     "Irrigation_Available": [data["irrigation_available"]],
     "Soil_pH": [data["soil_pH"]],
@@ -79,7 +79,7 @@ def predict_yield(data: dict[str, Any]):
     yield_input = {
         "Year": [data["year"]],
         "Month": [data["month"]],
-        "Crop": [data["crops"]],  # Ensure single crop
+        "Crop": [data["crop"]],  # Ensure single crop
         "Region": [data["region"]],
         "Temperature": [data["temperature"]],
         "Rainfall": [data["rainfall"]],
