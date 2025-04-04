@@ -7,4 +7,3 @@ statsmodels
 typing
 gdown
 cloudpickle
-gdown
